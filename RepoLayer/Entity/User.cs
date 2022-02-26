@@ -6,6 +6,7 @@ using System.Text;
 
 namespace RepoLayer.Entity
 {
+    //Entity Class used to create database table using EF.
     public  class User
     {
         [Key]

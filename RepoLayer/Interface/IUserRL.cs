@@ -10,5 +10,6 @@ namespace RepoLayer.Interface
     public interface IUserRL
     {
         public User Registration(UserRegistration userRegist);
+        public string Login(string email, string password);
     }
 }

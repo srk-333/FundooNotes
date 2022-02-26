@@ -11,13 +11,14 @@ namespace BusinessLayer.Service
     //Service Class of Business Layer
     public class UserBL : IUserBL
     {
+        //instance of RepoLayer Interface
         private readonly IUserRL userRL;
         //Constructor
         public UserBL(IUserRL userRL)
         {
             this.userRL = userRL;
         }
-        //Method to return UserRegistration obj to Repo Layer User.
+       //User registration
         public User Registration(UserRegistration userRegist)
         {
             try
@@ -26,7 +27,18 @@ namespace BusinessLayer.Service
             }
             catch (Exception)
             {
-
+                throw;
+            }
+        }
+        //User Login
+        public string Login(string email, string password)
+        {
+            try
+            {
+                return userRL.Login( email, password);
+            }
+            catch (Exception)
+            {
                 throw;
             }
         }

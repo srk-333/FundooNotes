@@ -13,13 +13,14 @@ namespace FundooNotes.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        //instance of BusinessLayer Interface
         private readonly IUserBL userBL;
         //Constructor
         public UserController(IUserBL userBL)
         {
             this.userBL = userBL;
         }
-        //Register a User
+        //User Register Api
         [HttpPost("Register")]
         public IActionResult Register(UserRegistration userRegistration)
         {
@@ -30,6 +31,23 @@ namespace FundooNotes.Controllers
                     return this.Ok(new { Success = true, message = "Registration successful", data = result});
                 else
                     return this.BadRequest(new { Success = false, message = "Registration Unsuccessful" });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //User Login Api
+        [HttpPost("Login")]
+        public IActionResult Login(UserLogin userLogin)
+        {
+            try
+            {
+                var user = userBL.Login(userLogin.Email, userLogin.Password);
+                if (user != null)
+                    return this.Ok(new { Success = true, message = "Logged In", data = user});
+                else
+                    return this.BadRequest(new { Success = false, message = "Enter Valid Email and Password" });
             }
             catch (Exception)
             {
