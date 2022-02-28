@@ -89,5 +89,28 @@ namespace RepoLayer.Service
               signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        //Forgot password Token Generation
+        public string ForgotPassword(string email)
+        {
+            try
+            {
+                //check Email Exists or Not.
+                var existingEmail = this.fundooContext.UserTable.Where(E => E.Email == email).FirstOrDefault();
+                if (existingEmail != null)
+                {
+                    //Generating Token 
+                    var token = GenerateSecurityToken(existingEmail.Email, existingEmail.Id);
+                    //passing Token to MsmqModel.
+                    new MsmqModel().Sender(token);
+                    return token;
+                }
+                else
+                    return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

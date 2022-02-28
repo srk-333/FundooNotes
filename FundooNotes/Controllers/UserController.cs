@@ -54,5 +54,22 @@ namespace FundooNotes.Controllers
                 throw;
             }
         }
+        //User Forgot Password Api
+        [HttpPost("ForgotPassword")]
+        public IActionResult ForgotPassword(string email)
+        {
+            try
+            {
+                var token = userBL.ForgotPassword(email);
+                if (token != null)
+                    return this.Ok(new { Success = true, message = "Email Sent to Your mail", data = token });
+                else
+                    return this.BadRequest(new { Success = false, message = "Error while sending Mail ! try Again" });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

@@ -24,18 +24,17 @@ namespace FundooNotes
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the Collection.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FundooContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:FundooDB"]));
             services.AddControllers();
-            services.AddTransient<IUserBL,UserBL>();
+            services.AddTransient<IUserBL, UserBL>();
             services.AddTransient<IUserRL, UserRL>();
             //Adding Swagger in Services Collection.
             services.AddSwaggerGen(c =>
@@ -88,8 +87,8 @@ namespace FundooNotes
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseSwagger();
             //Swagger MiddleWare
+            app.UseSwagger();         
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fundoo");
