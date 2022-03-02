@@ -18,7 +18,7 @@ namespace BusinessLayer.Service
         {
             this.userRL = userRL;
         }
-       //User registration
+        //User registration
         public User Registration(UserRegistration userRegist)
         {
             try
@@ -35,14 +35,14 @@ namespace BusinessLayer.Service
         {
             try
             {
-                return userRL.Login( email, password);
+                return userRL.Login(email, password);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-
+        //Forgot Password 
         public string ForgotPassword(string email)
         {
             try
@@ -51,9 +51,32 @@ namespace BusinessLayer.Service
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
+        //Reset Password
+        public bool ResetPassword(string email, string password, string newPassword)
+        {
+            try
+            {
+                return userRL.ResetPassword(email, password, newPassword);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Delete Account 
+        public bool DeleteAccount(string email)
+        {
+            try
+            {
+                return userRL.DeleteAccount(email);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        } 
     }
 }

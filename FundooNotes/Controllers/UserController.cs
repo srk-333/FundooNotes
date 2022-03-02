@@ -1,10 +1,12 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace FundooNotes.Controllers
@@ -65,6 +67,40 @@ namespace FundooNotes.Controllers
                     return this.Ok(new { Success = true, message = "Email Sent to Your mail", data = token });
                 else
                     return this.BadRequest(new { Success = false, message = "Error while sending Mail ! try Again" });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //User Reset Password Api
+        [Authorize]
+        [HttpPut("RestPassword")]
+        public IActionResult ResetPassword(string password , string confirmPassword)
+        {
+            try
+            {
+                var email = User.FindFirst(ClaimTypes.Email).Value.ToString();
+                if (userBL.ResetPassword(email, password, confirmPassword))
+                    return this.Ok(new { Success = true, message = "Password Changed Successfully"});
+                else
+                    return this.BadRequest(new { Success = false, message = "Password doesn't Match ! Please try again" });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Delete Account Api
+        [HttpDelete("DeleteYourAccount")]
+        public IActionResult DeleteAccount(string email)
+        {
+            try
+            {
+                if (userBL.DeleteAccount(email))
+                    return this.Ok(new { Success = true, message = "Account Deleted Successfully" });
+                else
+                    return this.BadRequest(new { Success = false, message = "Unable to Delete your Account ! Please try again" });
             }
             catch (Exception)
             {

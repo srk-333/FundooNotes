@@ -17,7 +17,7 @@ namespace RepoLayer.Service
     //Service Class
     public class UserRL : IUserRL
     {
-        //instance of  FundooContext Class
+        //instance of Classes
         private readonly FundooContext fundooContext;
         private readonly IConfiguration _Appsettings;
         //Constructor
@@ -36,6 +36,7 @@ namespace RepoLayer.Service
                 newUser.LastName = userRegist.LastName;
                 newUser.Email = userRegist.Email;
                 newUser.Password = userRegist.Password;
+                //Adding User Details in the Database.
                 fundooContext.UserTable.Add(newUser);
                 int result = fundooContext.SaveChanges();
                 if (result > 0)
@@ -56,7 +57,7 @@ namespace RepoLayer.Service
                 //if Email and password is empty return null. 
                 if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
                     return null;
-                //Linq query matches given input in database and returns that entry from the database.
+                //Linq query matches given input in database and returns that user details from the database.
                 var result = fundooContext.UserTable.Where(x => x.Email == email && x.Password == password).FirstOrDefault();
                 var id = result.Id;
                 if (result != null)
@@ -94,7 +95,7 @@ namespace RepoLayer.Service
         {
             try
             {
-                //check Email Exists or Not.
+                //Fetching user details from database With the email Id, if present in database.
                 var existingEmail = this.fundooContext.UserTable.Where(E => E.Email == email).FirstOrDefault();
                 if (existingEmail != null)
                 {
@@ -112,5 +113,52 @@ namespace RepoLayer.Service
                 throw;
             }
         }
+        //Method will update new Password in the database
+        public bool ResetPassword(string email, string password, string newPassword)
+        {
+            try
+            {
+                //Checks both password matching or Not
+                if (password.Equals(newPassword))
+                {
+                    //Fetching user details from database With the email Id , if present in database.
+                    var user = fundooContext.UserTable.Where(e => e.Email == email).FirstOrDefault();
+                    //Updating Password
+                    user.Password = newPassword;
+                    //Saving changes made in database.
+                    fundooContext.SaveChanges();
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Method to Delete a User from database.
+        public bool DeleteAccount(string email )
+        {
+            try
+            {
+                //Fetching user details from database With the email Id , if present in database.
+                var user = fundooContext.UserTable.Where(e => e.Email == email).FirstOrDefault();
+                if (user != null)
+                {
+                    //Remove the user from database.
+                    fundooContext.UserTable.Remove(user);
+                    //Saving changes made in database.
+                    fundooContext.SaveChanges();
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }   
     }
 }
