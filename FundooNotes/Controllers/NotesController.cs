@@ -97,9 +97,8 @@ namespace FundooNotes.Controllers
             }
         }
         //Get All Notes Api
-        [Authorize]
         [HttpGet("GetAllNotes")]
-        public IEnumerable<Notes> GetAllNotes()
+        public List<Notes> GetAllNotes()
         {
             try
             {
@@ -108,6 +107,119 @@ namespace FundooNotes.Controllers
                     return result;
                 else
                     return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Check Archieve
+        [Authorize]
+        [HttpPost("IsArchieveOrNot")]
+        public IActionResult IsArchieveOrNot(long noteId)
+        {
+            try
+            {
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
+                var result = notesBL.IsArchieveOrNot(noteId, userId);
+                if (result != null)
+                    return this.Ok(new { Success = true, message = "  Is Trash Or Not checked ", data = result });
+                else
+                    return this.BadRequest(new { Success = false, message = "Unsuccessful" });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Check Trash
+        [Authorize]
+        [HttpPost("IsTrashOrNot")]
+        public IActionResult IsTrashOrNot(long noteId)
+        {
+            try
+            {
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
+                var result = notesBL.IsTrashOrNot(noteId, userId);
+                if (result != null)
+                    return this.Ok(new { Success = true, message = " Is Trash Or Not checked ", data = result });
+                else
+                    return this.BadRequest(new { Success = false, message = "Unsuccessful" });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Check Pin
+        [Authorize]
+        [HttpPost("IsPinOrNot")]
+        public IActionResult IsPinOrNot(long noteId)
+        {
+            try
+            {
+                long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
+                var result = notesBL.IsPinOrNot(noteId, userId);
+                if (result != null)
+                    return this.Ok(new { Success = true, message = " Is Pin Or Not checked ", data = result });
+                else
+                    return this.BadRequest(new { Success = false, message = " Unsuccessful " });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Do Color
+        [Authorize]
+        [HttpPost("DoColour")]
+        public IActionResult DoColour(long noteId , string color)
+        {
+            try
+            {
+                var result = notesBL.DoColour(noteId , color);
+                if (result != null)
+                    return this.Ok(new { Success = true, message = " Notes Coloured  successfully ", data = result });
+                else
+                    return this.BadRequest(new { Success = false, message = "Colour Unsuccessful" });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Upload Image
+        [Authorize]
+        [HttpPost("UploadImage")]
+        public IActionResult UploadImage(long noteId, IFormFile image)
+        {
+            try
+            {
+                var userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
+                var result = notesBL.UploadImage(noteId, userId, image);
+                if (result != null)
+                    return this.Ok(new { Success = true, message = " Image Uploaded Successfully ", data = result });
+                else
+                    return this.BadRequest(new { Success = false, message = "Image Upload Failed ! Try Again " });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Create a Copy Of  Notes
+        [Authorize]
+        [HttpPost("MakeCopyOfNote")]
+        public IActionResult MakeCopyOfNote(long noteId)
+        {
+            try
+            {
+                var userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
+                var result = notesBL.MakeCopyOfNote(noteId, userId);
+                if (result != null)
+                    return this.Ok(new { Success = true, message = " Created a Copy Of Note Successfully ", data = result });
+                else
+                    return this.BadRequest(new { Success = false, message = "Failed to create a Copy of  Note ! Try Again " });
             }
             catch (Exception)
             {
