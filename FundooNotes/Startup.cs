@@ -34,6 +34,7 @@ namespace FundooNotes
         {
             services.AddDbContext<FundooContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:FundooDB"]));
             services.AddControllers();
+            //Add interface and service class in Collection.
             services.AddTransient<IUserBL, UserBL>();
             services.AddTransient<IUserRL, UserRL>();
             services.AddTransient<INotesBL, NotesBL>();

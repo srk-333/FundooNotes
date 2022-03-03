@@ -6,6 +6,7 @@ namespace CommonLayer.Models
 {
     public class UpdateNote
     {
+        //Update Notes Properties 
         public string Title { get; set; }
         public string Description { get; set; }
         public string Color { get; set; }

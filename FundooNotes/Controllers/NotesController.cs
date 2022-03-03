@@ -14,7 +14,7 @@ namespace FundooNotes.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NotesController : ControllerBase
+    public class NotesController : ControllerBase    //NotesController having all Apis for Notes
     {
         //instance of BusinessLayer Interface
         private readonly INotesBL notesBL;
@@ -77,7 +77,7 @@ namespace FundooNotes.Controllers
                 throw;
             }
         }
-        //Get Notes Api
+        //Get Notes by UserId Api
         [Authorize]
         [HttpGet("GetNoteByUserId")]
         public IEnumerable<Notes> GetNotesByUserId()
@@ -86,6 +86,24 @@ namespace FundooNotes.Controllers
             {
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
                 var result = notesBL.GetNote(userId);
+                if (result != null)
+                    return result;
+                else
+                    return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Get All Notes Api
+        [Authorize]
+        [HttpGet("GetAllNotes")]
+        public IEnumerable<Notes> GetAllNotes()
+        {
+            try
+            {
+                var result = notesBL.GetAllNote();
                 if (result != null)
                     return result;
                 else

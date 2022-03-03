@@ -8,6 +8,7 @@ using System.Text;
 
 namespace BusinessLayer.Service
 {
+    //Service Class 
     public class NotesBL : INotesBL
     {
         //instance of RepoLayer Interface
@@ -17,7 +18,7 @@ namespace BusinessLayer.Service
         {
             this.notesRL = notesRL;
         }
-        //Create Notes
+        //Create Notes in database
         public Notes CreateNote(NotesModel notesModel, long userId)
         {
             try
@@ -29,7 +30,7 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        //Update Notes
+        //Update Notes by NoteId in database
         public Notes UpdateNote(UpdateNote notesModel, long noteId)
         {
             try
@@ -41,7 +42,7 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        //Delete Notes
+        //Delete Notes by NoteId from database
         public bool DeleteNote(long noteId)
         {
             try
@@ -53,12 +54,24 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        //Get Notes By UserId
+        //Get Notes By UserId from database
         public IEnumerable<Notes> GetNote(long userId)
         {
             try
             {
                 return notesRL.GetNote(userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        ///Get All Notes from database
+        public IEnumerable<Notes> GetAllNote()
+        {
+            try
+            {
+                return notesRL.GetAllNote();
             }
             catch (Exception)
             {

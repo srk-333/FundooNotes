@@ -9,6 +9,7 @@ using System.Text;
 
 namespace RepoLayer.Service
 {
+    //Service Class
     public class NotesRL : INotesRL
     {
         //instance of Classes
@@ -99,13 +100,32 @@ namespace RepoLayer.Service
                 throw;
             }
         }
-        //Method to Fetch Notes from Database
+        //Method to Fetch Notes from Database for the given UserId.
         public IEnumerable<Notes> GetNote(long userId)
         {
             try
             {
-                //Fetch All the details with the given noteId.
+                //Fetch All the details from Notes Table for the given UserId.
                 var notes = fundooContext.NotesTable.Where(n => n.Id == userId).ToList();
+                if (notes != null)
+                {
+                    return notes;
+                }
+                else
+                    return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Method to Fetch All Notes from Database
+        public IEnumerable<Notes> GetAllNote()
+        {
+            try
+            {
+                //Fetch All the details from Notes Table
+                var notes = fundooContext.NotesTable.ToList();
                 if (notes != null)
                 {
                     return notes;

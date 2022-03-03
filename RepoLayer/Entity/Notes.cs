@@ -6,6 +6,7 @@ using System.Text;
 
 namespace RepoLayer.Entity
 {
+    //Create NotesTable in Database using EF and Migration.
     public  class Notes
     {
         [Key]

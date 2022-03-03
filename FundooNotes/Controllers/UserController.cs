@@ -13,7 +13,7 @@ namespace FundooNotes.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : ControllerBase     //UserController having all Apis for User
     {
         //instance of BusinessLayer Interface
         private readonly IUserBL userBL;
