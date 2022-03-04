@@ -80,6 +80,7 @@ namespace FundooNotes.Controllers
         {
             try
             {
+                //Take Email For which password had to be Changed.
                 var email = User.FindFirst(ClaimTypes.Email).Value.ToString();
                 if (userBL.ResetPassword(email, password, confirmPassword))
                     return this.Ok(new { Success = true, message = "Password Changed Successfully"});
@@ -92,7 +93,7 @@ namespace FundooNotes.Controllers
             }
         }
         //Delete Account Api
-        [HttpDelete("DeleteYourAccount")]
+        [HttpDelete("DeleteAccount")]
         public IActionResult DeleteAccount(string email)
         {
             try

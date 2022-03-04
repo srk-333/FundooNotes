@@ -18,5 +18,6 @@ namespace RepoLayer.Context
         //DbSet used to view Database and interact with Table in Database.
         public DbSet<User> UserTable { get; set; }
         public DbSet<Notes> NotesTable { get; set; }
+        public DbSet<Collabarator> CollabTable { get; set; }
     }
 }

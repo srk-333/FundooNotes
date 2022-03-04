@@ -14,7 +14,7 @@ namespace RepoLayer.Interface
         public Notes UpdateNote(UpdateNote notesModel, long noteId);
         public bool DeleteNote(long noteId);
         public IEnumerable<Notes> GetNote(long userId);
-        public List<Notes> GetAllNote();
+        public IEnumerable<Notes> GetAllNotes();
         public Notes IsArchieveOrNot(long noteId, long userId);
         public Notes IsTrashOrNot(long noteId, long userId);
         public Notes IsPinOrNot(long noteId, long userId);

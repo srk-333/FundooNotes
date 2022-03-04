@@ -25,11 +25,12 @@ namespace FundooNotes.Controllers
         }
         //Add Notes Api
         [Authorize]
-        [HttpPost("AddNote")]
+        [HttpPost("Create")]
         public IActionResult CreateNotes(NotesModel notesModel)
         {
             try
             {
+                //Take id of  Logged In User
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
                 var result = notesBL.CreateNote(notesModel , userId);
                 if (result != null)
@@ -44,7 +45,7 @@ namespace FundooNotes.Controllers
         }
         //Updates Notes Api
         [Authorize]
-        [HttpPut("UpdateNote")]
+        [HttpPut("Update")]
         public IActionResult UpdateNotes(UpdateNote notesModel , long noteId)
         {
             try
@@ -62,7 +63,7 @@ namespace FundooNotes.Controllers
         }
         //Delete Notes Api
         [Authorize]
-        [HttpDelete("DeleteNote")]
+        [HttpDelete("Delete")]
         public IActionResult DeleteNotes(long noteId)
         {
             try
@@ -79,11 +80,12 @@ namespace FundooNotes.Controllers
         }
         //Get Notes by UserId Api
         [Authorize]
-        [HttpGet("GetNoteByUserId")]
+        [HttpGet("{Id}/Get")]
         public IEnumerable<Notes> GetNotesByUserId()
         {
             try
             {
+                //Take id of  Logged In User
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
                 var result = notesBL.GetNote(userId);
                 if (result != null)
@@ -97,12 +99,12 @@ namespace FundooNotes.Controllers
             }
         }
         //Get All Notes Api
-        [HttpGet("GetAllNotes")]
-        public List<Notes> GetAllNotes()
+        [HttpGet("GetAll")]
+        public IEnumerable<Notes> GetAllNotes()
         {
             try
             {
-                var result = notesBL.GetAllNote();
+                var result = notesBL.GetAllNotes();
                 if (result != null)
                     return result;
                 else
@@ -115,11 +117,12 @@ namespace FundooNotes.Controllers
         }
         //Check Archieve
         [Authorize]
-        [HttpPost("IsArchieveOrNot")]
+        [HttpPost("IsArchieve")]
         public IActionResult IsArchieveOrNot(long noteId)
         {
             try
             {
+                //Take id of  Logged In User
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
                 var result = notesBL.IsArchieveOrNot(noteId, userId);
                 if (result != null)
@@ -134,11 +137,12 @@ namespace FundooNotes.Controllers
         }
         //Check Trash
         [Authorize]
-        [HttpPost("IsTrashOrNot")]
+        [HttpPut("IsTrash")]
         public IActionResult IsTrashOrNot(long noteId)
         {
             try
             {
+                //Take id of  Logged In User
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
                 var result = notesBL.IsTrashOrNot(noteId, userId);
                 if (result != null)
@@ -153,11 +157,12 @@ namespace FundooNotes.Controllers
         }
         //Check Pin
         [Authorize]
-        [HttpPost("IsPinOrNot")]
+        [HttpPut("IsPin")]
         public IActionResult IsPinOrNot(long noteId)
         {
             try
             {
+                //Take id of  Logged In User
                 long userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
                 var result = notesBL.IsPinOrNot(noteId, userId);
                 if (result != null)
@@ -172,7 +177,7 @@ namespace FundooNotes.Controllers
         }
         //Do Color
         [Authorize]
-        [HttpPost("DoColour")]
+        [HttpPut("Colour")]
         public IActionResult DoColour(long noteId , string color)
         {
             try
@@ -190,11 +195,12 @@ namespace FundooNotes.Controllers
         }
         //Upload Image
         [Authorize]
-        [HttpPost("UploadImage")]
+        [HttpPost("Image")]
         public IActionResult UploadImage(long noteId, IFormFile image)
         {
             try
             {
+                //Take id of  Logged In User
                 var userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
                 var result = notesBL.UploadImage(noteId, userId, image);
                 if (result != null)
@@ -209,11 +215,12 @@ namespace FundooNotes.Controllers
         }
         //Create a Copy Of  Notes
         [Authorize]
-        [HttpPost("MakeCopyOfNote")]
+        [HttpPost("MakeCopy")]
         public IActionResult MakeCopyOfNote(long noteId)
         {
             try
             {
+                //Take id of  Logged In User
                 var userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Id").Value);
                 var result = notesBL.MakeCopyOfNote(noteId, userId);
                 if (result != null)

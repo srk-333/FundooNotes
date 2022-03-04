@@ -127,7 +127,7 @@ namespace RepoLayer.Service
             }
         }
         //Method to Fetch All Notes from Database
-        public List<Notes> GetAllNote()
+        public IEnumerable<Notes> GetAllNotes()
         {
             try
             {

@@ -68,11 +68,11 @@ namespace BusinessLayer.Service
             }
         }
         ///Get All Notes from database
-        public List<Notes> GetAllNote()
+        public IEnumerable<Notes> GetAllNotes()
         {
             try
             {
-                return notesRL.GetAllNote();
+                return notesRL.GetAllNotes();
             }
             catch (Exception)
             {
