@@ -56,8 +56,8 @@ namespace RepoLayer.Service
             {
                 byte[] encode = new byte[password.Length];
                 encode = Encoding.UTF8.GetBytes(password);
-                string msg = Convert.ToBase64String(encode);
-                return msg;
+                string encryptPass = Convert.ToBase64String(encode);
+                return encryptPass;
             }
             catch (Exception)
             {
@@ -75,8 +75,8 @@ namespace RepoLayer.Service
                 int charCount = utf8Decode.GetCharCount(toDecodeByte, 0, toDecodeByte.Length);
                 char[] decodedChar = new char[charCount];
                 utf8Decode.GetChars(toDecodeByte, 0, toDecodeByte.Length, decodedChar, 0);
-                string result = new String(decodedChar);
-                return result;
+                string decryptPass = new String(decodedChar);
+                return decryptPass;
             }
             catch (Exception)
             {

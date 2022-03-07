@@ -63,7 +63,7 @@ namespace FundooNotes.Controllers
         }
         //Get Collab by NoteId
         [Authorize]
-        [HttpGet("Get")]
+        [HttpGet("Get/{NoteId}")]
         public IEnumerable<Collabarator> GetByNoteId(long noteId)
         {
             try
