@@ -35,7 +35,7 @@ namespace RepoLayer.Service
                 newUser.FirstName = userRegist.FirstName;
                 newUser.LastName = userRegist.LastName;
                 newUser.Email = userRegist.Email;
-                newUser.Password = userRegist.Password;
+                newUser.Password = EncryptPass(userRegist.Password);
                 //Adding User Details in the Database.
                 fundooContext.UserTable.Add(newUser);
                 int result = fundooContext.SaveChanges();
@@ -43,6 +43,40 @@ namespace RepoLayer.Service
                     return newUser;
                 else
                     return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Encrypt Password
+        public string EncryptPass(string password)
+        {
+            try
+            {
+                byte[] encode = new byte[password.Length];
+                encode = Encoding.UTF8.GetBytes(password);
+                string msg = Convert.ToBase64String(encode);
+                return msg;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        //Decrypt Password
+        public string DecryptPass(string encodedPass)
+        {
+            try
+            {
+                UTF8Encoding encoder = new UTF8Encoding();
+                Decoder utf8Decode = encoder.GetDecoder();
+                byte[] toDecodeByte = Convert.FromBase64String(encodedPass);
+                int charCount = utf8Decode.GetCharCount(toDecodeByte, 0, toDecodeByte.Length);
+                char[] decodedChar = new char[charCount];
+                utf8Decode.GetChars(toDecodeByte, 0, toDecodeByte.Length, decodedChar, 0);
+                string result = new String(decodedChar);
+                return result;
             }
             catch (Exception)
             {
@@ -58,9 +92,10 @@ namespace RepoLayer.Service
                 if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
                     return null;
                 //Linq query matches given input in database and returns that user details from the database.
-                var result = fundooContext.UserTable.Where(x => x.Email == email && x.Password == password).FirstOrDefault();
+                var result = fundooContext.UserTable.FirstOrDefault(x => x.Email == email);
+                string dPass = DecryptPass(result.Password);
                 var id = result.Id;
-                if (result != null)
+                if (result != null && dPass == password)
                     //Calling Jwt Token Creation method and returning token.
                     return GenerateSecurityToken(result.Email, id);
                 else
@@ -124,7 +159,7 @@ namespace RepoLayer.Service
                     //Fetching user details from database With the email Id , if present in database.
                     var user = fundooContext.UserTable.Where(e => e.Email == email).FirstOrDefault();
                     //Updating Password
-                    user.Password = newPassword;
+                    user.Password = EncryptPass(newPassword);
                     //Saving changes made in database.
                     fundooContext.SaveChanges();
                     return true;
