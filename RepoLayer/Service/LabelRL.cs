@@ -119,5 +119,24 @@ namespace RepoLayer.Service
                 throw;
             }
         }
+        //Method to Fetch All Labels from Database
+        public IEnumerable<Labels> GetAllLabels()
+        {
+            try
+            {
+                //Fetch All the details from Labels Table
+                var labels = fundooContext.LabelTable.ToList();
+                if (labels != null)
+                {
+                    return labels;
+                }
+                else
+                    return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

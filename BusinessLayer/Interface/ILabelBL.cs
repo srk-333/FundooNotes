@@ -12,5 +12,6 @@ namespace BusinessLayer.Interface
         public bool RemoveLabel(long labelId, long userId);
         public IEnumerable<Labels> GetByNoteId(long noteId);
         public IEnumerable<Labels> GetByUserId(long userId);
+        public IEnumerable<Labels> GetAllLabels();
     }
 }

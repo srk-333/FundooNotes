@@ -76,5 +76,17 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        //Method to Fetch All Labels from Database
+        public IEnumerable<Labels> GetAllLabels()
+        {
+            try
+            {
+                return labelRL.GetAllLabels();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

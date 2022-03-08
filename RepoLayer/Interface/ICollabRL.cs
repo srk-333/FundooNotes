@@ -11,5 +11,6 @@ namespace RepoLayer.Interface
         public Collabarator AddCollab(string email, long userId, long noteId);
         public Collabarator RemoveCollab(long userId, long collabId);
         public IEnumerable<Collabarator> GetByNoteId(long noteId);
+        public IEnumerable<Collabarator> GetAllCollab();
     }
 }

@@ -2,10 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 using RepoLayer.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace FundooNotes.Controllers
@@ -16,10 +20,14 @@ namespace FundooNotes.Controllers
     {
         //instance of BusinessLayer Interface
         private readonly ICollabBL collabBL;
+        private readonly IMemoryCache memoryCache;
+        private readonly IDistributedCache distributedCache;
         //Constructor
-        public CollabController(ICollabBL collabBL)
+        public CollabController(ICollabBL collabBL , IMemoryCache memoryCache , IDistributedCache distributedCache)
         {
             this.collabBL = collabBL;
+            this.memoryCache = memoryCache;
+            this.distributedCache = distributedCache;
         }
         // Add Collab
         [Authorize]
@@ -63,7 +71,7 @@ namespace FundooNotes.Controllers
         }
         //Get Collab by NoteId
         [Authorize]
-        [HttpGet("Get/{NoteId}")]
+        [HttpGet("Get")]
         public IEnumerable<Collabarator> GetByNoteId(long noteId)
         {
             try
@@ -78,6 +86,47 @@ namespace FundooNotes.Controllers
             {
                 throw;
             }
+        }
+        //Get All  Collab 
+        [HttpGet("GetAll")]
+        public IEnumerable<Collabarator> GetAllCollab()
+        {
+            try
+            {
+                var result = collabBL.GetAllCollab();
+                if (result != null)
+                    return result;
+                else
+                    return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        [HttpGet("redis")]
+        public async Task<IActionResult> GetAllCollabUsingRedisCache()
+        {
+            var cacheKey = "collabList";
+            string serializedcollabList;
+            var collabList = new List<Collabarator>();
+            var redisCollabList = await distributedCache.GetAsync(cacheKey);
+            if (redisCollabList != null)
+            {
+                serializedcollabList = Encoding.UTF8.GetString(redisCollabList);
+                collabList = JsonConvert.DeserializeObject<List<Collabarator>>(serializedcollabList);
+            }
+            else
+            {
+                collabList = (List<Collabarator>)collabBL.GetAllCollab();
+                serializedcollabList = JsonConvert.SerializeObject(collabList);
+                redisCollabList = Encoding.UTF8.GetBytes(serializedcollabList);
+                var options = new DistributedCacheEntryOptions()
+                    .SetAbsoluteExpiration(DateTime.Now.AddMinutes(15))
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(2));
+                await distributedCache.SetAsync(cacheKey, redisCollabList, options);
+            }
+            return Ok(collabList);
         }
     }
 }

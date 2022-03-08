@@ -62,5 +62,24 @@ namespace RepoLayer.Service
                 throw;
             }
         }
+        //Method to Fetch All Collabs data from Database
+        public IEnumerable<Collabarator> GetAllCollab()
+        {
+            try
+            {
+                //Fetch All the details from Collab Table
+                var collabs = fundooContext.CollabTable.ToList();
+                if (collabs != null)
+                {
+                    return collabs;
+                }
+                else
+                    return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

@@ -53,5 +53,17 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
+        //Method to Fetch All Collabs data from Database
+        public IEnumerable<Collabarator> GetAllCollab()
+        {
+            try
+            {
+                return collabRL.GetAllCollab();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
