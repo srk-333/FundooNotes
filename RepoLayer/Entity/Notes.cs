@@ -121,6 +121,6 @@ namespace RepoLayer.Entity
         /// <value>
         /// The user.
         /// </value>
-        public User User { get; set; }
+        public User user { get; set; }
     }
 }

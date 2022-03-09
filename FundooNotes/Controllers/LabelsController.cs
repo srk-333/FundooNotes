@@ -72,11 +72,11 @@ namespace FundooNotes.Controllers
                 var label = this.labelBL.AddLabelName(labelName, noteId, userId);
                 if (label != null)
                 {
-                    return this.Ok(new { Success = true, message = " Collab Added  successfully ", data = label });
+                    return this.Ok(new { Success = true, message = " Label Added  successfully ", data = label });
                 }
                 else
                 {
-                    return this.BadRequest(new { Success = false, message = "Collab Add Failed ! Try Again" });
+                    return this.BadRequest(new { Success = false, message = "Label Add Failed ! Try Again" });
                 }
             }
             catch (Exception)

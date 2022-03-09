@@ -53,22 +53,30 @@ namespace RepoLayer.Service
         {
             try
             {
-                User newUser = new User
+                var user = this.fundooContext.UserTable.FirstOrDefault(u => u.Email == userRegist.Email);
+                if (user == null)
                 {
-                    FirstName = userRegist.FirstName,
-                    LastName = userRegist.LastName,
-                    Email = userRegist.Email,
-                    Password = this.EncryptPass(userRegist.Password)
-                };
+                    User newUser = new User
+                    {
+                        FirstName = userRegist.FirstName,
+                        LastName = userRegist.LastName,
+                        Email = userRegist.Email,
+                        Password = this.EncryptPass(userRegist.Password)
+                    };
 
-                // Adding User Details in the Database.
-                this.fundooContext.UserTable.Add(newUser);
+                    // Adding User Details in the Database.
+                    this.fundooContext.UserTable.Add(newUser);
 
-                // Save Changes Made in database
-                int result = this.fundooContext.SaveChanges();
-                if (result > 0)
-                {
-                    return newUser;
+                    // Save Changes Made in database
+                    int result = this.fundooContext.SaveChanges();
+                    if (result > 0)
+                    {
+                        return newUser;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
                 {

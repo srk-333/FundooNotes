@@ -49,7 +49,7 @@ namespace RepoLayer.Entity
         /// <value>
         /// The user.
         /// </value>
-        public User User { get; set; }
+        public User user { get; set; }
 
         /// <summary>
         /// Gets or sets the notes identifier.
@@ -66,6 +66,6 @@ namespace RepoLayer.Entity
         /// <value>
         /// The notes.
         /// </value>
-        public Notes Notes { get; set; }
+        public Notes notes { get; set; }
     }
 }
