@@ -46,12 +46,5 @@ namespace BusinessLayer.Interface
         /// <param name="newPassword">The new password.</param>
         /// <returns> true or false </returns>
         public bool ResetPassword(string email, string password, string newPassword);
-
-        /// <summary>
-        /// Deletes the account.
-        /// </summary>
-        /// <param name="email">The email.</param>
-        /// <returns> true or false </returns>
-        public bool DeleteAccount(string email);  
     }
 }

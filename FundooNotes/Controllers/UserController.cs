@@ -144,30 +144,5 @@ namespace FundooNotes.Controllers
                 throw;
             }
         }
-
-        /// <summary>
-        /// Deletes the account.
-        /// </summary>
-        /// <param name="email">The email.</param>
-        /// <returns>true or false </returns>
-        [HttpDelete("DeleteAccount")]
-        public IActionResult DeleteAccount(string email)
-        {
-            try
-            {
-                if (this.userBL.DeleteAccount(email))
-                {
-                    return this.Ok(new { Success = true, message = "Account Deleted Successfully" });
-                }
-                else
-                {
-                    return this.BadRequest(new { Success = false, message = "Unable to Delete your Account ! Please try again" });
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
     }
 }

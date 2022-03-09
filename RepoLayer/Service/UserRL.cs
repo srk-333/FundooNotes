@@ -228,37 +228,6 @@ namespace RepoLayer.Service
         }
 
         /// <summary>
-        /// Method to Delete a User from database.
-        /// </summary>
-        /// <param name="email">Takes mail </param>
-        /// <returns>True or False </returns>
-        public bool DeleteAccount(string email)
-        {
-            try
-            {
-                // Fetching user details from database With the email Id , if present in database.
-                var user = this.fundooContext.UserTable.Where(e => e.Email == email).FirstOrDefault();
-                if (user != null)
-                {
-                    // Remove the user from database.
-                    this.fundooContext.UserTable.Remove(user);
-
-                    // Saving changes made in database.
-                    this.fundooContext.SaveChanges();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Implementing Token For Login using Email and Id
         /// </summary>
         /// <param name="email"> Takes email </param>

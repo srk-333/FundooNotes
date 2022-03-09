@@ -111,24 +111,5 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-
-        /// <summary>
-        /// Deletes the account.
-        /// </summary>
-        /// <param name="email">The email.</param>
-        /// <returns>
-        /// true or false
-        /// </returns>
-        public bool DeleteAccount(string email)
-        {
-            try
-            {
-                return this.userRL.DeleteAccount(email);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        } 
     }
 }
