@@ -1,77 +1,129 @@
-﻿using BusinessLayer.Interface;
-using CommonLayer.Models;
-using RepoLayer.Entity;
-using RepoLayer.Interface;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="UserBL.cs" company="Saurav">
+//     Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace BusinessLayer.Service
 {
-    //Service Class of Business Layer
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using BusinessLayer.Interface;
+    using CommonLayer.Models;
+    using RepoLayer.Entity;
+    using RepoLayer.Interface;
+
+    /// <summary>
+    /// Service Class of Business Layer
+    /// </summary>
+    /// <seealso cref="BusinessLayer.Interface.IUserBL" />
     public class UserBL : IUserBL
-    {
-        //instance of RepoLayer Interface
+    {      
+        /// <summary>
+        /// instance of RepoLayer Interface
+        /// </summary>
         private readonly IUserRL userRL;
-        //Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserBL"/> class.
+        /// </summary>
+        /// <param name="userRL">The user interface.</param>
         public UserBL(IUserRL userRL)
         {
             this.userRL = userRL;
         }
-        //User registration
+
+        /// <summary>
+        /// Registrations the specified user register.
+        /// </summary>
+        /// <param name="userRegist">The user register model.</param>
+        /// <returns>
+        /// user details which added in database
+        /// </returns>
         public User Registration(UserRegistration userRegist)
         {
             try
             {
-                return userRL.Registration(userRegist);
+                return this.userRL.Registration(userRegist);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        //User Login
+
+        /// <summary>
+        /// Logins the specified email.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>
+        /// token with login
+        /// </returns>
         public string Login(string email, string password)
         {
             try
             {
-                return userRL.Login(email, password);
+                return this.userRL.Login(email, password);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        //Forgot Password 
+
+        /// <summary>
+        /// Forgot the password.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <returns>
+        /// token for forgot password
+        /// </returns>
         public string ForgotPassword(string email)
         {
             try
             {
-                return userRL.ForgotPassword(email);
+                return this.userRL.ForgotPassword(email);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        //Reset Password
+
+        /// <summary>
+        /// Resets the password.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="newPassword">The new password.</param>
+        /// <returns>
+        /// true or false
+        /// </returns>
         public bool ResetPassword(string email, string password, string newPassword)
         {
             try
             {
-                return userRL.ResetPassword(email, password, newPassword);
+                return this.userRL.ResetPassword(email, password, newPassword);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        //Delete Account 
+
+        /// <summary>
+        /// Deletes the account.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <returns>
+        /// true or false
+        /// </returns>
         public bool DeleteAccount(string email)
         {
             try
             {
-                return userRL.DeleteAccount(email);
+                return this.userRL.DeleteAccount(email);
             }
             catch (Exception)
             {

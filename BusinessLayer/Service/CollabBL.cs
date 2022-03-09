@@ -1,64 +1,108 @@
-﻿using BusinessLayer.Interface;
-using RepoLayer.Entity;
-using RepoLayer.Interface;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="CollabBL.cs" company="Saurav">
+//     Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace BusinessLayer.Service
 {
-    //Service Class
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using BusinessLayer.Interface;
+    using RepoLayer.Entity;
+    using RepoLayer.Interface;
+
+    /// <summary>
+    /// Service Class
+    /// </summary>
+    /// <seealso cref="BusinessLayer.Interface.ICollabBL" />
     public class CollabBL : ICollabBL
     {
-        //instance of RepoLayer Interface
+        /// <summary>
+        /// The collaborator Interface
+        /// </summary>
         private readonly ICollabRL collabRL;
-        //Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CollabBL"/> class.
+        /// </summary>
+        /// <param name="collabRL">The collaborator interface.</param>
         public CollabBL(ICollabRL collabRL)
         {
             this.collabRL = collabRL;
         }
-        //Method to Add Person to Collab.
+
+        /// <summary>
+        /// Adds the collaborator.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>
+        /// collaborator detail
+        /// </returns>
         public Collabarator AddCollab(string email, long userId, long noteId)
         {
             try
             {
-                return collabRL.AddCollab(email, userId, noteId);
+                return this.collabRL.AddCollab(email, userId, noteId);
             }
             catch (Exception)
             {
                 throw;
             }
-        }       
-        //Method to Remove Collabed Person
+        }
+
+        /// <summary>
+        /// Removes the collaborator.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="collabId">The collaborator identifier.</param>
+        /// <returns>
+        /// removed collaborator detail
+        /// </returns>
         public Collabarator RemoveCollab(long userId, long collabId)
         {
             try
             {
-                return collabRL.RemoveCollab( userId, collabId);
+                return this.collabRL.RemoveCollab(userId, collabId);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        //Get Details By CollabId
+
+        /// <summary>
+        /// Gets the by note identifier.
+        /// </summary>
+        /// <param name="noteId">The note identifier.</param>
+        /// <returns>
+        /// collaborator by note id
+        /// </returns>
         public IEnumerable<Collabarator> GetByNoteId(long noteId)
         {
             try
             {
-                return collabRL.GetByNoteId(noteId);
+                return this.collabRL.GetByNoteId(noteId);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        //Method to Fetch All Collabs data from Database
+
+        /// <summary>
+        /// Gets all collaborator.
+        /// </summary>
+        /// <returns>
+        /// all collaborator
+        /// </returns>
         public IEnumerable<Collabarator> GetAllCollab()
         {
             try
             {
-                return collabRL.GetAllCollab();
+                return this.collabRL.GetAllCollab();
             }
             catch (Exception)
             {
